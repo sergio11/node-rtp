@@ -1,6 +1,7 @@
 var Mp3Library = require('./lib/Mp3Library');
-var Mp3Source = require('./lib/Mp3Source.js');
-var RTPProtocol = require('./RTPProtocol.js');
+var Mp3Source = require('./lib/Mp3Source');
+var RTPProtocol = require('./RTPProtocol');
+var UDPSender = require('./UDPSender');
 
 var library = new Mp3Library({ basedir: './songs/' });
 
@@ -8,12 +9,14 @@ library.on("ready",function(){
     console.log("Mp3 ready");
     var mp3source = new Mp3Source(library);
     var rtpprotocol = new RTPProtocol();
+    var udpSender = new UDPSender();
+    udpSender.enableStats(true);
     mp3source.on('track', function(){
         /*
             El marker bit se actives para señalizar de esta manera al receptor
             que empieza una nueva canción.
         */
-        
+        rtpprotocol.setMarker = true;
         
     });
     
@@ -24,12 +27,12 @@ library.on("ready",function(){
         que emite MP3Source.
     */
     mp3source.on('frame', function(frame){
-        console.log("Packing ...");
         rtpprotocol.pack(frame);
     });
     
     rtpprotocol.on('packet', function(packet){
-        console.log("RTP Package");
-        console.log(packet);
+        udpSender.broadcast(packet);
     });
+    
+    udpSender.start();
 });
