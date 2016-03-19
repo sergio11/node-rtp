@@ -1,0 +1,27 @@
+{
+  "name": "node-rtp",
+  "version": "1.0.0",
+  "description": "Very basic server in real-time MP3 audio files using RTP",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergio11/node-rtp.git"
+  },
+  "keywords": [
+    "RTP",
+    "NodeJS",
+    "UDP"
+  ],
+  "author": "Sergio Sánchez Sánchez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergio11/node-rtp/issues"
+  },
+  "homepage": "https://github.com/sergio11/node-rtp#readme",
+  "dependencies": {
+    "bluebird": "^3.3.4"
+  }
+}
